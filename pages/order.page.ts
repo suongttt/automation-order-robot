@@ -91,7 +91,7 @@ export class OrderPage {
       }
 
       if (await this.orderFailureAlert.isVisible()) {
-        await this.orderFailureAlert.waitFor({ state: 'hidden', timeout: 3000 }).catch(() => {});
+        await this.orderFailureAlert.waitFor({ state: 'hidden', timeout: 3000 }).catch(() => { });
       } else {
         await this.page.waitForTimeout(500);
       }
@@ -126,6 +126,17 @@ export class OrderPage {
   }
 
   async captureOrderConfirmationScreenshot(page: Page, path = 'screenshoots/order-confirmation.png') {
+    await page.waitForFunction(() => {
+      const images = Array.from(
+        document.querySelectorAll('#robot-preview-image img')
+      ) as HTMLImageElement[];
+
+      return (
+        images.length > 0 &&
+        images.every(img => img.complete && img.naturalWidth > 0)
+      );
+    });
+
     await page.screenshot({ path: path });
   }
 }
