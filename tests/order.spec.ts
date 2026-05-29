@@ -6,9 +6,9 @@ import { readOrdersFromExcel } from '../utils/order-data';
 
 const orders = readOrdersFromExcel();
 
-async function expectSuccessfulOrderScreenshot(orderPage: OrderPage, screenshotName: string) {
+async function expectSuccessfulOrderScreenshot(page:any, orderPage: OrderPage, screenshotName: string) {
   await expect(orderPage.receipt).toBeVisible();
-  await orderPage.captureOrderConfirmationScreenshot(`screenshots/${screenshotName}.png`);
+  await orderPage.captureOrderConfirmationScreenshot(page, `screenshots/${screenshotName}.png`);
 }
 
 test.describe('Order robot submit from Excel', () => {
@@ -33,7 +33,7 @@ test.describe('Order robot submit from Excel', () => {
       });
       await orderPage.retryOrderWhenFail();
 
-      await expectSuccessfulOrderScreenshot(orderPage, `order-${order.orderNo}`);
+      await expectSuccessfulOrderScreenshot(page, orderPage, `order-${order.orderNo}`);
     });
   }
 });

@@ -125,7 +125,7 @@ export class OrderPage {
     }
   }
 
-  async captureOrderConfirmationScreenshot(path = 'screenshoots/order-confirmation.png') {
-    await this.receipt.screenshot({ path });
+  async captureOrderConfirmationScreenshot(page: Page, path = 'screenshoots/order-confirmation.png') {
+    await page.screenshot({ path: path });
   }
 }
